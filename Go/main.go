@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	datareader "game/DataReader"
+	game "game/Game"
+)
 
-func main (){
+func main() {
 	fmt.Println("Hello world!")
+	game.Game()
+	datareader.Reader("test")
 }
