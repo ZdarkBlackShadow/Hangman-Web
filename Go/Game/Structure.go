@@ -20,7 +20,5 @@ type GameAffichage struct {
 }
 
 type Tableau struct {
-	Pseudos      []string
-	Scores       []int
-	NbPartieJoue []int
+	Pseudos []User
 }
