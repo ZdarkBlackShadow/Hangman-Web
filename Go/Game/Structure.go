@@ -3,9 +3,11 @@ package game
 //Ficher où l'on va mettre toute les tructures
 
 type User struct {
-	Pseudo string
-	Level  int
-	Langue string
+	Pseudo       string
+	Level        int
+	Langue       string
+	NbPartieJoué int
+	Score        int
 }
 
 type GameAffichage struct {

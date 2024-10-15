@@ -1,5 +1,4 @@
-package datareader
+package datareaderwriter
 
 func Reader(filename string) {
-
 }
