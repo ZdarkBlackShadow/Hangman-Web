@@ -1,0 +1,34 @@
+{{define "score"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <title>Hangman</title>
+</head>
+<body>
+    {{template "header"}}
+    <p>Tableau des score</p>
+    <br><br>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Score</th>
+                <th>Langue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Pseudos}}
+            <tr>
+                <td>{{.Pseudo}}</td>
+                <td>{{.Level}}</td>
+                <td>{{.Langue}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</body>
+</html>
+{{end}}

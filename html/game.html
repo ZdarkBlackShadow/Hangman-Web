@@ -1,0 +1,29 @@
+{{define "game"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <title>Hangman</title>
+</head>
+<body>
+    {{template "header"}}
+    {{if eq .Start true}}
+        <p>Entrez une lettre ou un mot</p>
+    {{else if eq .DerniereEssaieReussie true}}
+        <p>Bien joué</p>
+    {{else}}
+        <p>Dommage</p>
+    {{end}}
+    <p>{{.Mot}}</p>
+    <form action="/game/traitement" method="post">
+        <label for="answer"></label>
+        <input type="text" name="answer" id="answer">
+        <button type="submit">Valider</button>
+    </form>
+    <br><br><br>
+    <img src="/assets/image/test.jpg" alt="image du pendu actuelle">
+</body>
+</html>
+{{end}}
