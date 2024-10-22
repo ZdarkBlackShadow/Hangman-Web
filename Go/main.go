@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	datareaderwriter "game/DataReaderWriter"
 	game "game/Game"
 	"html/template"
 	"log"
@@ -107,7 +106,7 @@ func Ending(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	game.Game()
-	datareaderwriter.Reader("test")
+	//datareaderwriter.Reader("test")
 	if err != nil {
 		fmt.Printf("Erreur => %s\n", err.Error())
 		os.Exit(02)

@@ -11,29 +11,31 @@
 <body>
     {{template "header"}}
     <h1>Tableau des score</h1>
-    <br><br>
-    <table border="2">
-        <thead>
-            <tr>
-                <th>Pseudo</th>
-                <th>Score</th>
-                <th>Langue</th>
-                <th>Nombre de partie joué</th>
-                <th>Difficulté</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{range .Pseudos}}
-            <tr>
-                <td>{{.Pseudo}}</td>
-                <td>{{.Score}}</td>
-                <td>{{.Langue}}</td>
-                <td>{{.NbPartieJoué}}</td>
-                <td>{{.Level}}</td>
-            </tr>
-            {{end}}
-        </tbody>
-    </table>
+    <div class="score">
+        <br><br>
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Score</th>
+                    <th>Langue</th>
+                    <th>Nombre de partie joué</th>
+                    <th>Difficulté</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Pseudos}}
+                <tr>
+                    <td>{{.Pseudo}}</td>
+                    <td>{{.Score}}</td>
+                    <td>{{.Langue}}</td>
+                    <td>{{.NbPartieJoué}}</td>
+                    <td>{{.Level}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
     {{template "footer"}}
 </body>
 </html>
