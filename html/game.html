@@ -5,27 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/game.css">
     <title>Hangman</title>
 </head>
 <body>
     {{template "header"}}
+    <div class="form-container">
+        <form action="/game/traitement" method="post">
     {{if eq .Start true}}
-        <p>Entrez une lettre ou un mot</p>
+        <h2>Entrez une lettre ou un mot</h2>
     {{else if eq .DerniereEssaieReussie true}}
-        <p>Bien joué</p>
+        <h2>Bien joué</h2>
     {{else}}
-        <p>Dommage</p>
+        <h2>Dommage</h2>
     {{end}}
-    <p>{{.Mot}}</p>
-    <br><br>
-    <p>{{.ListeMots}}</p>
-    <form action="/game/traitement" method="post">
         <label for="answer"></label>
-        <input type="text" name="answer" id="answer">
+        <input type="text" name="answer" id="answer" required>
         <button type="submit">Valider</button>
     </form>
-    <br><br><br>
-    <img src="/assets/image/test.jpg" alt="image du pendu actuelle">
+    </div>
+    <div class="display-word-letter">
+        <h3>Liste des lettres déja utilisé : {{range .ListeLettre}}{{.}} {{end}}</h3>
+    </div>
+    <div class="display-word-letter">
+        <h3>Liste des mots déja utilisé : {{range .ListeMots}}{{.}} {{end}}</h3>
+    </div>
+    {{template "footer"}}
 </body>
 </html>
 {{end}}
