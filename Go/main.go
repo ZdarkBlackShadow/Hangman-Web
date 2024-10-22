@@ -70,8 +70,8 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Pseudo incorrect", http.StatusUnauthorized) // Renvoie une erreur 401 (Unauthorized)
 		return                                                     // Arrête l'exécution ici si le pseudo est incorrect
 		// Redirection vers "/game" si le pseudo est correct
-		http.Redirect(w, r, "/game", http.StatusSeeOther)
 	}
+	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
 func TraitementGame(w http.ResponseWriter, r *http.Request) {
