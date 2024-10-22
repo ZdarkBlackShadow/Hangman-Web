@@ -1,0 +1,22 @@
+h1 {
+    justify-content: center;
+    text-align: center;
+    color: maroon;
+}
+
+table {
+    margin: 0 auto; 
+    border-collapse: collapse;
+    width: 50%; 
+}
+
+th, td {
+    padding: 10px;
+    text-align: center; 
+    border: 3px solid green; 
+    color:rgb(19, 43, 22);
+}
+
+thead, tbody {
+    background-color: beige; 
+}

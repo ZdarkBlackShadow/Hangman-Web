@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/score.css">
     <title>Hangman</title>
 </head>
 <body>
     {{template "header"}}
-    <p>Tableau des score</p>
+    <h1>Tableau des score</h1>
     <br><br>
     <table border="2">
         <thead>
@@ -17,18 +18,23 @@
                 <th>Pseudo</th>
                 <th>Score</th>
                 <th>Langue</th>
+                <th>Nombre de partie joué</th>
+                <th>Difficulté</th>
             </tr>
         </thead>
         <tbody>
             {{range .Pseudos}}
             <tr>
                 <td>{{.Pseudo}}</td>
-                <td>{{.Level}}</td>
+                <td>{{.Score}}</td>
                 <td>{{.Langue}}</td>
+                <td>{{.NbPartieJoué}}</td>
+                <td>{{.Level}}</td>
             </tr>
             {{end}}
         </tbody>
     </table>
+    {{template "footer"}}
 </body>
 </html>
 {{end}}
