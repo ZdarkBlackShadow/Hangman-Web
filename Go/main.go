@@ -67,6 +67,13 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 	if r.FormValue("pseudo") != "tintin" {
 		//erreur, mauvais pseudo
+		if pseudo != "tintin" {
+			// Gestion de l'erreur : mauvais pseudo
+			http.Error(w, "Pseudo incorrect", http.StatusUnauthorized) // Renvoie une erreur 401 (Unauthorized)
+			return // Arrête l'exécution ici si le pseudo est incorrect
+		}
+		// Redirection vers "/game" si le pseudo est correct
+		http.Redirect(w, r, "/game", http.StatusSeeOther)
 	}
 }
 
@@ -74,6 +81,18 @@ func TraitementGame(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.FormValue("answer"))
 	GameData.ListeMots = append(GameData.ListeMots, r.FormValue("answer"))
 	//traitement de la reponse de l'utilisateur
+		if answer == GameData.MotActuel {
+			GameData.Score++
+			fmt.Println("Bonne réponse !")
+		} else {
+			GameData.EssaisRestants--
+			fmt.Println("Mauvaise réponse...")
+			
+			if GameData.EssaisRestants <= 0 {
+				GameData.Finie = true
+				fmt.Println("Plus d'essais restants, la partie est finie.")
+			}
+		}
 	if GameData.Finie {
 		http.Redirect(w, r, "/ending", http.StatusSeeOther)
 	} else {
