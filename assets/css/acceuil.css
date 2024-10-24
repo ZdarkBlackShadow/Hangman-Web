@@ -8,7 +8,7 @@ body {
 }
 
 .form-container {
-    background-color: beige;
+    background-color: #fffacd;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -33,12 +33,12 @@ label {
 input, select {
     margin-bottom: 15px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #007acc;
     border-radius: 5px;
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #00ced1;
     color: white;
     padding: 10px;
     border: none;
@@ -48,5 +48,5 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #00999b;
 }

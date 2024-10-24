@@ -105,7 +105,7 @@ func Ending(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	game.Game()
+	//game.Game()
 	//datareaderwriter.Reader("test")
 	if err != nil {
 		fmt.Printf("Erreur => %s\n", err.Error())

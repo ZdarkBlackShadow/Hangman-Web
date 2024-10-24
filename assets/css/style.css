@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    background-color: rgb(4, 117, 121);
+    background-color: #e6e6fa;
     min-height: 100vh;
 }
 
@@ -16,7 +16,7 @@ body {
     left: 0;
     width: 100%;
     padding: 10px 40px;
-    background: blue;
+    background: #4169e1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,11 +52,20 @@ body {
     width: 100%;
 }
 
-footer {
-    background-color: #63ace7;
+.footer footer {
+    background-color: #191970;
     padding: 20px;
     text-align: center;
     position: fixed;
     bottom: 0;
+    right: 0;
     width: 100%;
+}
+
+.footer p{
+    color:aquamarine ;
+}
+
+.footer a {
+    color: blueviolet;
 }

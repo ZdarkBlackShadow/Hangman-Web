@@ -19,7 +19,7 @@ h1 {
     top: 15%;
     position: absolute;
     text-align: center;
-    color: maroon;
+    color: #ff7f50;
 }
 
 .score table {
@@ -34,10 +34,10 @@ h1 {
 .score th, td {
     padding: 10px;
     text-align: center; 
-    border: 3px solid green; 
-    color:rgb(19, 43, 22);
+    border: 3px solid #87ceeb; 
+    color:#333333;
 }
 
 .score thead, tbody {
-    background-color: beige; 
+    background-color: #add8e6; 
 }
