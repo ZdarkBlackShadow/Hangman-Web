@@ -7,42 +7,6 @@ body {
     align-items: center;
 }
 
-.score {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-h1 {
-    display: block;
-    top: 15%;
-    position: absolute;
-    text-align: center;
-    color: #ff7f50;
-}
-
-.score table {
-    top: 25%;
-    position: absolute;
-    margin-left: 25%;
-    margin: 0 auto; 
-    border-collapse: collapse;
-    width: 50%; 
-}
-
-.score th, td {
-    padding: 10px;
-    text-align: center; 
-    border: 3px solid #87ceeb; 
-    color:#333333;
-}
-
-.score thead, tbody {
-    background-color: #add8e6; 
-}
-
-
 .form-container {
     display: flex;
     justify-content: center;
@@ -76,6 +40,6 @@ h1 {
     background-color: #00999b;
 }
 
-form {
-    margin: 10px;
+.form-container h3 {
+    text-align: center;
 }

@@ -13,6 +13,7 @@
     {{template "header"}}
     <div class="form-container">
         <form action="/game/traitement" method="post">
+        <h2>[{{range .Mot}} {{.}} {{end}}]</h2>
         {{if eq .Start true}}
             <h2>Entrez une lettre ou un mot</h2>
         {{else if eq .DerniereEssaieReussie true}}

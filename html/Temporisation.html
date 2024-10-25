@@ -1,0 +1,31 @@
+{{define "temporisation"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/temporisation.css">
+    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <title>Hangman</title>
+</head>
+<body>
+    {{template "header"}}
+    {{if eq .BackTo "game"}}
+    <div class="form-container">
+        <form action="/game" method="post">
+            <h3>{{.Message}}</h3>
+            <button type="submit">retour au jeu</button>
+        </form>
+    </div>
+    {{else}}
+    <div class="form-container">
+        <form action="/acceil" method="post">
+            <h3>{{.Message}}</h3>
+            <button type="submit">retour à l'acceuil</button>
+        </form>
+    </div>
+    {{end}}
+    {{template "footer"}}
+</body>
+{{end}}
