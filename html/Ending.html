@@ -4,19 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/ending.css">
     <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
     <title>Document</title>
 </head>
 <body>
-    {{if eq .Victoire true}}
-    <p>Victoire</p>
-    {{else}}
-    <p>Défaite</p>
-    {{end}}
-    <form action="/score" method="post">
-        <button type="submit">Tableau des score</button>
-    </form>
+    {{template "header"}}
+    <div class="form-container">
+        <form action="/score" method="post">
+            {{if eq .Victoire false}}
+            <h3>Victoire</h3>
+            <img src="/static/image/victoire.png" alt="image de victoire">
+            {{else}}
+            <h3>Défaite</h3>
+            <img src="/static/image/defaite.png" alt="image de defaite">
+            {{end}}
+            <button type="submit">Tableau des score</button>
+        </form>
+    </div>
     {{template "footer"}}
 </body>
 </html>

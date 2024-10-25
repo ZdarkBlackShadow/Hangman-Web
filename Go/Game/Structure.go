@@ -12,7 +12,7 @@ type User struct {
 type GameAffichage struct {
 	Start                 bool
 	DerniereEssaieReussie bool
-	Mot                   string
+	Mot                   []string
 	ListeLettre           []string
 	ListeMots             []string
 	PvRestant             int
@@ -25,4 +25,9 @@ type GameAffichage struct {
 
 type Tableau struct {
 	Pseudos []User
+}
+
+type Erreur struct {
+	Message string
+	BackTo  string
 }
