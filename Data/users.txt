@@ -1,1 +1,2 @@
-Adrien 10 150 2 Langue 
+Adrien 10 150 2 Français
+Jonathan 15 250 4 English 

@@ -2,6 +2,7 @@ package game
 
 import (
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -51,6 +52,33 @@ func GameInit(word string, difficulte int) {
 }
 
 func GameLap(submit_answer string) bool {
+	if submit_answer == Word {
+		return true
+	}
+	if len(submit_answer) > 1 {
+		PV -= 2
+		ListeMot = append(ListeMot, submit_answer)
+		return false
+	}
+
+	letter := rune(submit_answer[0])
+	if strings.ContainsRune(Word, letter) {
+		if !strings.ContainsRune(string(LettreAlreadyFind), letter) {
+			LettreAlreadyFind = append(LettreAlreadyFind, letter)
+			for i, char := range Word {
+				if char == letter {
+					WordToDisplay[i] = letter
+				}
+			}
+		}
+		if string(WordToDisplay) == Word {
+			return true
+		}
+	} else {
+		PV -= 1
+		ListeLettre = append(ListeLettre, submit_answer)
+	}
+	return PV <= 0
 	/*
 		Verifie si submit_answer est un mot ou une lettre
 		et le comparer avec le mot :
@@ -61,5 +89,4 @@ func GameLap(submit_answer string) bool {
 		Si le mot est juste ou que toutes les lettres on été trouvé renvoyer true
 		Sinon renvoyer False
 	*/
-	return false //a remplacer avec le code
 }

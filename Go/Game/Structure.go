@@ -18,8 +18,8 @@ type GameAffichage struct {
 	PvRestant             int
 	Finie                 bool
 	Victoire              bool
-	EssaisRestants        int  // Ajout pour gérer les essais restants dans la partie
-	Score                 int  // Ajout du score directement dans GameAffichage pour suivre les points du joueur
+	EssaisRestants        int    // Ajout pour gérer les essais restants dans la partie
+	Score                 int    // Ajout du score directement dans GameAffichage pour suivre les points du joueur
 	MotActuel             string // Ajout pour stocker le mot à deviner dans la partie
 }
 

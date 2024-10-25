@@ -3,8 +3,10 @@ package datareaderwriter
 import (
 	"bufio"
 	"fmt"
+	game "game/Game"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -98,4 +100,47 @@ func AnalyseLangue(motCache, langue string) {
 	} else {
 		fmt.Printf("Le mt caché '%s' n'est pas trouvé dans la liste des mots en %s.\n", motCache, langue)
 	}
+}
+
+func ReaderUser() game.Tableau {
+
+	filePath := "Data/users.txt"
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Errorf("erreur d'ouverture du fichier : %v\n", err)
+	}
+	defer file.Close()
+	var users game.Tableau = game.Tableau{
+		Pseudos: []game.User{},
+	}
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		parts := strings.Split(line, ",")
+		if len(parts) != 5 {
+			fmt.Println("Ligne invalide dans le fichier :", line)
+			continue
+		}
+		user := game.User{
+			Pseudo:       parts[0],
+			NbPartieJoué: atoi(parts[1]),
+			Score:        atoi(parts[2]),
+			Level:        atoi(parts[3]),
+			Langue:       parts[4],
+		}
+		users.Pseudos = append(users.Pseudos, user)
+		fmt.Printf("Erreur de lecture^du fichier: %v\n", err)
+
+	}
+	return users
+
+}
+
+func atoi(s string) int {
+	value, err := strconv.Atoi(s)
+	if err != nil {
+		fmt.Printf("Erreur de conversion de '%s' en entier : %v\n", s, err)
+		return 0
+	}
+	return value
 }
