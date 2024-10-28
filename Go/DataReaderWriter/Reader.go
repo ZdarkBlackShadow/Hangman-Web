@@ -4,29 +4,26 @@ import (
 	"bufio"
 	"fmt"
 	game "game/Game"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 )
 
-// Reader lit le contenu d'un fichier et l'affiche dans la console.
 func Reader(filename string) {
 	// Créer le chemin complet vers le fichier
 	path := filepath.Join("data", "français", filename)
-
 	file, err := os.Open(path)
 	if err != nil {
 		fmt.Printf("Erreur lors de l'ouverture du fichier '%s': %v\n", path, err)
 		return
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
-
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Erreur lors de la lecture du fichier '%s': %v\n", path, err)
 	}
@@ -35,7 +32,6 @@ func Reader(filename string) {
 // Reader lit le contenu d'un fichier dans la langue spécifiée (français ou anglais) et l'affiche dans la console.
 func DifferentLanguages(filename, langue string) {
 	var path string
-
 	// Différenciation entre les chemins pour le français et l'anglais
 	if strings.ToLower(langue) == "français" {
 		path = filepath.Join("data", "français", filename)
@@ -45,19 +41,16 @@ func DifferentLanguages(filename, langue string) {
 		fmt.Printf("Erreur : Langue inconnue '%s'. Choisissez entre 'français' et 'anglais'.\n", langue)
 		return
 	}
-
 	file, err := os.Open(path)
 	if err != nil {
 		fmt.Printf("Erreur lors de l'ouverture du fichier '%s': %v\n", path, err)
 		return
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
-
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Erreur lors de la lecture du fichier '%s': %v\n", path, err)
 	}
@@ -65,7 +58,6 @@ func DifferentLanguages(filename, langue string) {
 
 func AnalyseLangue(motCache, langue string) {
 	var path string
-
 	if strings.ToLower(langue) == "français" {
 		path = filepath.Join("data", "français", "Files.txt")
 	} else if strings.ToLower(langue) == "anglais" || strings.ToLower(langue) == "english" {
@@ -74,14 +66,12 @@ func AnalyseLangue(motCache, langue string) {
 		fmt.Printf("Erreur : Langue inconnue '%s. Choisissez entre 'français' et 'anglais'.\n", langue)
 		return
 	}
-
 	file, err := os.Open(path)
 	if err != nil {
 		fmt.Printf("Erreur lors de l'ouverture du fichier '%v': %v\n", path, err)
 		return
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
 	found := false
 	for scanner.Scan() {
@@ -90,11 +80,9 @@ func AnalyseLangue(motCache, langue string) {
 			break
 		}
 	}
-
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Erreurr llrs de la lecture du fichier '%s' : %v\n", path, err)
 	}
-
 	if found {
 		fmt.Printf("Le mot caché '%s' est reconnu comme étant en %s.\n", motCache, langue)
 	} else {
@@ -103,34 +91,47 @@ func AnalyseLangue(motCache, langue string) {
 }
 
 func ReaderUser() game.Tableau {
-
-	filePath := "Data/users.txt"
-	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		fmt.Errorf("erreur d'ouverture du fichier : %v\n", err)
+	/*
+		Fonction qui lit le ficher users.txt et qui met les données dans la structure tableau
+	*/
+	content, error := ioutil.ReadFile("../Data/users.txt") //ouverture du ficher, content contient tout le ficher dans une liste de byte
+	if error != nil {
+		fmt.Println("Error when opening file")
 	}
-	defer file.Close()
-	var users game.Tableau = game.Tableau{
+	users := game.Tableau{
 		Pseudos: []game.User{},
 	}
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		parts := strings.Split(line, ",")
-		if len(parts) != 5 {
-			fmt.Println("Ligne invalide dans le fichier :", line)
-			continue
+	temp := game.User{}
+	temp1 := ""
+	temp2 := 0
+	for _, element := range string(content) { //on regarde tout les element de content en tant que string, ducoup on va analyser un type rune (un seul caratere à la fois)
+		switch element {
+		case '\n': //cas où l'on saute de ligne : nouvel utilisateur
+			temp.Langue = temp1
+			temp1 = ""
+			users.Pseudos = append(users.Pseudos, temp)
+			temp = game.User{}
+			temp2 = 0
+		case ' ': //cas d'un espace : on change de donnée (pseudo, nbparite joué, score, level, langue)
+			temp2++
+			if temp2 != 6 {
+				switch temp2 {
+				case 1:
+					temp.Pseudo = temp1
+				case 2:
+					temp.NbPartieJoué = atoi(temp1)
+				case 3:
+					temp.Score = atoi(temp1)
+				case 4:
+					temp.Level = atoi(temp1)
+				}
+			}
+			temp1 = "" //reset de temp quand on change de donnée
+		default:
+			if element != '\r' { //on ajoute à temp chaque caractere lorsque que l'on change de donnée
+				temp1 += string(element)
+			}
 		}
-		user := game.User{
-			Pseudo:       parts[0],
-			NbPartieJoué: atoi(parts[1]),
-			Score:        atoi(parts[2]),
-			Level:        atoi(parts[3]),
-			Langue:       parts[4],
-		}
-		users.Pseudos = append(users.Pseudos, user)
-		fmt.Printf("Erreur de lecture^du fichier: %v\n", err)
-
 	}
 	return users
 
@@ -143,4 +144,28 @@ func atoi(s string) int {
 		return 0
 	}
 	return value
+}
+
+//Fonction pour Jonathan, n'hesite pas à regarder le code de ReaderUser(), glhf
+
+func WordReader(langue string, difficulte int) []string {
+	/*
+		Fonction qui va renvoyer une liste de string qui contiendra
+		tout les mots d'un ficher.txt exemple : WordReader("Français", 3)
+		devra lire le ficher file3.txt dans le dossier français.
+		Une ligne = un mot
+		Nombre de ligne maximum  : 30
+	*/
+	return []string{}
+}
+
+func VictoireReader(victoire bool) []string {
+	/*
+		Fonction qui va renvoyer une liste de string qui contiendra
+		toutes les phrases du ficher victoire.txt ou du ficher defaite.txt
+		en fonction de victoire = true ou false
+		(une ligne = une phrase)
+		Nombre de ligne maximum  : 40
+	*/
+	return []string{}
 }

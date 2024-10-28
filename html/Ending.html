@@ -13,7 +13,7 @@
     {{template "header"}}
     <div class="form-container">
         <form action="/score" method="post">
-            {{if eq .Victoire false}}
+            {{if eq .Victoire true}}
             <h3>Victoire</h3>
             <img src="/static/image/victoire.png" alt="image de victoire">
             {{else}}

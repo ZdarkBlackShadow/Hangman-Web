@@ -13,7 +13,7 @@ var PV int
 var ListeMot []string
 var ListeLettre []string
 var LettreAlreadyFind []rune
-var WordToDisplay []rune
+var WordToDisplay []string
 
 //Fonction
 
@@ -38,15 +38,15 @@ func GameInit(word string, difficulte int) {
 	ListeLettre = []string{}
 	ListeMot = []string{}
 	LettreAlreadyFind = []rune{}
-	WordToDisplay = []rune{}
+	WordToDisplay = []string{}
 	rand.Seed(time.Now().UnixNano())
 	RandomLetter := rune(Word[rand.Intn(len(word))])
 	LettreAlreadyFind = append(LettreAlreadyFind, RandomLetter)
 	for i := 0; i < len(word); i++ {
 		if rune(Word[i]) == RandomLetter {
-			WordToDisplay = append(WordToDisplay, RandomLetter)
+			WordToDisplay = append(WordToDisplay, string(RandomLetter))
 		} else {
-			WordToDisplay = append(WordToDisplay, '_')
+			WordToDisplay = append(WordToDisplay, "_")
 		}
 	}
 }
@@ -60,18 +60,23 @@ func GameLap(submit_answer string) bool {
 		ListeMot = append(ListeMot, submit_answer)
 		return false
 	}
-
 	letter := rune(submit_answer[0])
 	if strings.ContainsRune(Word, letter) {
 		if !strings.ContainsRune(string(LettreAlreadyFind), letter) {
 			LettreAlreadyFind = append(LettreAlreadyFind, letter)
 			for i, char := range Word {
 				if char == letter {
-					WordToDisplay[i] = letter
+					WordToDisplay[i] = string(letter)
 				}
 			}
 		}
-		if string(WordToDisplay) == Word {
+		temp := true
+		for i, element := range WordToDisplay {
+			if element != string(Word[i]) {
+				temp = false
+			}
+		}
+		if temp {
 			return true
 		}
 	} else {

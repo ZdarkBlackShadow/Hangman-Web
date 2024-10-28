@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	datareaderwriter "game/DataReaderWriter"
 	game "game/Game"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -19,6 +21,7 @@ var Erreur game.Erreur = game.Erreur{
 }
 var Identified bool = false
 var InGame bool = false
+var Replay bool = false
 
 /*{
 	Start:                 true,
@@ -64,30 +67,20 @@ func ScoreRoute(w http.ResponseWriter, r *http.Request) {
 		Erreur.BackTo = "game"
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	} else {
-		Users := []game.User{
-			{
-				Pseudo:       "Adrien",
-				Level:        10,
-				Langue:       "Français",
-				NbPartieJoué: 9,
-				Score:        150,
-			},
-			{
-				Pseudo:       "Jonathan",
-				Level:        9,
-				Langue:       "English",
-				NbPartieJoué: 12,
-				Score:        300,
-			},
-		}
-		data := game.Tableau{
-			Pseudos: Users,
-		}
+		data := datareaderwriter.ReaderUser()
 		err1 := temp.ExecuteTemplate(w, "score", data)
 		if err1 != nil {
 			log.Fatal(err1)
 		}
 	}
+}
+
+func PseudoVerification(pseudo string) bool {
+	temp, err := regexp.MatchString("^[a-zA-Z]{6,32}$", pseudo)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return temp
 }
 
 func TraitementUser(w http.ResponseWriter, r *http.Request) {
@@ -96,8 +89,7 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 		Erreur.BackTo = "acceuil"
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	}
-	fmt.Println(r.FormValue("pseudo"))
-	if r.FormValue("pseudo") != "tintin" {
+	if !PseudoVerification(r.FormValue("pseudo")) {
 		// Gestion de l'erreur : mauvais pseudo
 		Erreur.Message = "code 401 : Pseudo incorect"
 		Erreur.BackTo = "acceuil"
@@ -109,7 +101,7 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 	GameData = game.GameAffichage{
 		Start:                 true,
 		DerniereEssaieReussie: false,
-		Mot:                   []string{"t", "_", "s", "_"},
+		Mot:                   game.WordToDisplay,
 		ListeLettre:           game.ListeLettre,
 		ListeMots:             game.ListeMot,
 		PvRestant:             game.PV,
@@ -126,10 +118,33 @@ func TraitementGame(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	}
 	//traitement de la reponse de l'utilisateur
+	temp1 := []string{}
+	for _, ele := range game.WordToDisplay {
+		temp1 = append(temp1, ele)
+	}
 	temp := game.GameLap(r.FormValue("answer"))
+	temp2 := false
+	for i, element := range game.WordToDisplay {
+		if element != temp1[i] {
+			temp2 = true
+			break
+		}
+	}
+	GameData = game.GameAffichage{
+		Start:                 false,
+		DerniereEssaieReussie: temp2,
+		Mot:                   game.WordToDisplay,
+		ListeLettre:           game.ListeLettre,
+		ListeMots:             game.ListeMot,
+		PvRestant:             game.PV,
+		Finie:                 false,
+		Victoire:              false,
+	}
+
 	if temp || game.PV <= 0 {
 		GameData.Finie = true
 		GameData.Victoire = game.PV > 0
+		InGame = false
 		http.Redirect(w, r, "/ending", http.StatusSeeOther)
 	} else {
 		http.Redirect(w, r, "/game", http.StatusSeeOther)
@@ -171,12 +186,44 @@ func Temporisation(w http.ResponseWriter, r *http.Request) {
 		} else {
 			Erreur.Message = "code 404 : Wrong URL"
 		}
+		Erreur.BackTo = "acceuil"
 	}
-	Erreur.BackTo = "acceuil"
 	err1 := temp.ExecuteTemplate(w, "temporisation", Erreur)
 	if err1 != nil {
 		log.Fatal(err1)
 	}
+}
+
+func ScoreTraitementGame(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		Erreur.Message = "code 403 : Accés refusé"
+		Erreur.BackTo = "acceuil"
+		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
+	}
+	Identified = true
+	temp1, _ := strconv.Atoi(r.FormValue("level"))
+	game.GameInit("hello", temp1)
+	GameData = game.GameAffichage{
+		Start:                 true,
+		DerniereEssaieReussie: false,
+		Mot:                   game.WordToDisplay,
+		ListeLettre:           game.ListeLettre,
+		ListeMots:             game.ListeMot,
+		PvRestant:             game.PV,
+		Finie:                 false,
+		Victoire:              false,
+	}
+	http.Redirect(w, r, "/game", http.StatusSeeOther)
+}
+
+func ScoreTraitementAcceil(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		Erreur.Message = "code 403 : Accés refusé"
+		Erreur.BackTo = "acceuil"
+		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
+	}
+	Identified = false
+	http.Redirect(w, r, "/acceil", http.StatusSeeOther)
 }
 
 func OpenRoads() {
@@ -187,6 +234,8 @@ func OpenRoads() {
 	http.HandleFunc("/game/traitement", TraitementGame)
 	http.HandleFunc("/ending", Ending)
 	http.HandleFunc("/temporisation", Temporisation)
+	http.HandleFunc("/score/traitement/replay", ScoreTraitementGame)
+	http.HandleFunc("/score/traitement/acceil", ScoreTraitementAcceil)
 }
 
 func main() {
@@ -212,6 +261,10 @@ func main() {
 			Ending(w, r)
 		case "/temporisation":
 			Temporisation(w, r)
+		case "/score/traitement/acceil":
+			ScoreTraitementAcceil(w, r)
+		case "/score/traitement/replay":
+			ScoreTraitementGame(w, r)
 		default:
 			http.Redirect(w, r, "/temporisation", http.StatusTemporaryRedirect)
 		}
