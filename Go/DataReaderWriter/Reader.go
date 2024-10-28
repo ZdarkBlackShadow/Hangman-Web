@@ -155,6 +155,8 @@ func WordReader(langue string, difficulte int) []string {
 	} else if langue == "english" {
 		filename = filepath.Join("../Data/English", fmt.Sprintf("File%d.txt", difficulte))
 	} else {
+		filename = filepath.Join("../Data/Espagnol", fmt.Sprintf("File%d.txt", difficulte))
+
 		fmt.Println("Langue non supportée")
 		return nil
 	}
