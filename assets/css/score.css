@@ -1,20 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.score {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
-    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 h1 {
@@ -25,41 +13,57 @@ h1 {
     color: #ff7f50;
 }
 
-.score table {
+.score {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
     top: 25%;
-    position: relative;
-    margin: 0 auto; 
+    position: fixed;
+}
+
+.score table {
     border-collapse: collapse;
     width: 50%; 
     max-height: 300px;
-    overflow-y: auto;
-}
-
-.score th, td {
-    padding: 10px;
-    text-align: center; 
+    overflow: auto;
+    table-layout: fixed;
     border: 3px solid #87ceeb; 
-    color:#333333;
 }
 
-.score thead, tbody {
+.score thead th {
+    position: sticky;
     background-color: #add8e6; 
+    font-size: 15px;
+}
+
+th,
+td {
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+tr {
+    background-color:#add8e6 ;
 }
 
 
 .form-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
     margin-top: 10px;
-    position: relative;
+    position: fixed;
+    bottom: 48%;
+    left: 4%;
 }
 
 .form-container form {
     background-color: #fffacd;
     padding: 20px;
+    margin: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
@@ -82,6 +86,39 @@ h1 {
     background-color: #00999b;
 }
 
-form {
+/*form contenair 2*/
+
+
+.form-container2 {
+    display: flex;
+    margin-top: 10px;
+    position: fixed;
+    bottom: 48%;
+    right: 5%;
+}
+
+.form-container2 form {
+    background-color: #fffacd;
+    padding: 20px;
     margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.form-container2  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+.form-container2 button {
+    background-color: #00ced1;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.form-container2 button:hover {
+    background-color: #00999b;
 }

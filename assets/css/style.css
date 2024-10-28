@@ -52,11 +52,14 @@ body {
     width: 100%;
 }
 
+
 .footer footer {
     background-color: #191970;
     padding: 20px;
     text-align: center;
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     width: 100%;
 }
 
