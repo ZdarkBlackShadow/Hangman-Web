@@ -13,11 +13,10 @@
     {{template "header"}}
     <div class="form-container">
         <form action="/score" method="post">
+            <h3>{{.Phrasefinal}}</h3>
             {{if eq .Victoire true}}
-            <h3>Victoire</h3>
             <img src="/static/image/victoire.png" alt="image de victoire">
             {{else}}
-            <h3>Défaite</h3>
             <img src="/static/image/defaite.png" alt="image de defaite">
             {{end}}
             <button type="submit">Tableau des score</button>

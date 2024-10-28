@@ -95,3 +95,8 @@ func GameLap(submit_answer string) bool {
 		Sinon renvoyer False
 	*/
 }
+
+func RandomString(liste []string) string {
+	rand.Seed(time.Now().UnixNano())
+	return liste[rand.Intn(len(liste))]
+}

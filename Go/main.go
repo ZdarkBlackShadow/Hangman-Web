@@ -97,7 +97,7 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 	}
 	Identified = true
 	temp1, _ := strconv.Atoi(r.FormValue("level"))
-	game.GameInit("test", temp1)
+	game.GameInit(game.RandomString(datareaderwriter.WordReader(r.FormValue("langue"), temp1)), temp1)
 	GameData = game.GameAffichage{
 		Start:                 true,
 		DerniereEssaieReussie: false,
@@ -163,6 +163,7 @@ func Ending(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 		}
 	}
+	GameData.Phrasefinal = game.RandomString(datareaderwriter.VictoireReader(GameData.Victoire))
 	err1 := temp.ExecuteTemplate(w, "ending", GameData)
 	if err1 != nil {
 		log.Fatal(err1)

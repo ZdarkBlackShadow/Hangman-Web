@@ -119,11 +119,11 @@ func ReaderUser() game.Tableau {
 				case 1:
 					temp.Pseudo = temp1
 				case 2:
-					temp.NbPartieJoué = atoi(temp1)
+					temp.NbPartieJoué = Atoi(temp1)
 				case 3:
-					temp.Score = atoi(temp1)
+					temp.Score = Atoi(temp1)
 				case 4:
-					temp.Level = atoi(temp1)
+					temp.Level = Atoi(temp1)
 				}
 			}
 			temp1 = "" //reset de temp quand on change de donnée
@@ -137,7 +137,7 @@ func ReaderUser() game.Tableau {
 
 }
 
-func atoi(s string) int {
+func Atoi(s string) int {
 	value, err := strconv.Atoi(s)
 	if err != nil {
 		fmt.Printf("Erreur de conversion de '%s' en entier : %v\n", s, err)
@@ -150,10 +150,10 @@ func atoi(s string) int {
 
 func WordReader(langue string, difficulte int) []string {
 	var filename string
-	if langue == "Français" {
-		filename = filepath.Join("./Data/Français", fmt.Sprintf("File%d", difficulte))
+	if langue == "français" {
+		filename = filepath.Join("../Data/Français", fmt.Sprintf("File%d.txt", difficulte))
 	} else if langue == "english" {
-		filename = filepath.Join("./Data/English", fmt.Sprintf("File%d", difficulte))
+		filename = filepath.Join("../Data/English", fmt.Sprintf("File%d.txt", difficulte))
 	} else {
 		fmt.Println("Langue non supportée")
 		return nil
@@ -163,17 +163,17 @@ func WordReader(langue string, difficulte int) []string {
 		fmt.Printf("Erreur lors de la lecture du fichier : %v\n", err)
 		return nil
 	}
-	scanner := bufio.NewScanner(strings.NewReader(string(content)))
 	var words []string
-	for scanner.Scan() {
-		if len(words) >= 30 {
-			break
+	temp := ""
+	for _, element := range string(content) {
+		if element == '\n' {
+			words = append(words, temp)
+			temp = ""
+		} else {
+			if element != '\r' {
+				temp += string(element)
+			}
 		}
-		words = append(words, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Printf("Erreur lors de la lecture du fichier : %v\n", err)
-		return nil
 	}
 	/*
 		Fonction qui va renvoyer une liste de string qui contiendra
@@ -182,14 +182,7 @@ func WordReader(langue string, difficulte int) []string {
 		Une ligne = un mot
 		Nombre de ligne maximum  : 30
 	*/
-	return []string{
-		"bonjour", "ordinateur", "fleur", "soleil", "école",
-		"chat", "maison", "ciel", "mer", "rivière",
-		"montagne", "forêt", "arbre", "livre", "poésie",
-		"musique", "théâtre", "jardin", "film", "pluie",
-		"hiver", "été", "printemps", "automne", "chanson",
-		"histoire", "cheval", "oiseau", "lac", "neige",
-	}
+	return words
 }
 
 func WordsReadBothFiles(frLangue, enLangue string, difficulte int) []string {
@@ -202,25 +195,26 @@ func WordsReadBothFiles(frLangue, enLangue string, difficulte int) []string {
 func VictoireReader(victoire bool) []string {
 	var filename string
 	if victoire {
-		filename = "./Data/victoire.txt"
+		filename = "../Data/victoire.txt"
 	} else {
-		filename = "./Data/defaite.txt"
+		filename = "../Data/defaite.txt"
 	}
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("Erreur lors de la lecture du fichier :%v\n", err)
 		return nil
 	}
-	scanner := bufio.NewScanner(strings.NewReader(string(content)))
 	var phrases []string
-	for scanner.Scan() {
-		if len(phrases) >= 40 {
-			break
+	temp := ""
+	for _, element := range string(content) {
+		if element == '\n' {
+			phrases = append(phrases, temp)
+			temp = ""
+		} else {
+			if element != '\r' {
+				temp += string(element)
+			}
 		}
-		phrases = append(phrases, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		return nil
 	}
 	/*
 		Fonction qui va renvoyer une liste de string qui contiendra
@@ -229,5 +223,5 @@ func VictoireReader(victoire bool) []string {
 		(une ligne = une phrase)
 		Nombre de ligne maximum  : 40
 	*/
-	return []string{}
+	return phrases
 }
