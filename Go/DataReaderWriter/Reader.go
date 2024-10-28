@@ -149,6 +149,32 @@ func atoi(s string) int {
 //Fonction pour Jonathan, n'hesite pas à regarder le code de ReaderUser(), glhf
 
 func WordReader(langue string, difficulte int) []string {
+	var filename string
+	if langue == "Français" {
+		filename = filepath.Join("./Data/Français", fmt.Sprintf("File%d", difficulte))
+	} else if langue == "english" {
+		filename = filepath.Join("./Data/English", fmt.Sprintf("File%d", difficulte))
+	} else {
+		fmt.Println("Langue non supportée")
+		return nil
+	}
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Erreur lors de la lecture du fichier : %v\n", err)
+		return nil
+	}
+	scanner := bufio.NewScanner(strings.NewReader(string(content)))
+	var words []string
+	for scanner.Scan() {
+		if len(words) >= 30 {
+			break
+		}
+		words = append(words, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Erreur lors de la lecture du fichier : %v\n", err)
+		return nil
+	}
 	/*
 		Fonction qui va renvoyer une liste de string qui contiendra
 		tout les mots d'un ficher.txt exemple : WordReader("Français", 3)
@@ -156,10 +182,46 @@ func WordReader(langue string, difficulte int) []string {
 		Une ligne = un mot
 		Nombre de ligne maximum  : 30
 	*/
-	return []string{}
+	return []string{
+		"bonjour", "ordinateur", "fleur", "soleil", "école",
+		"chat", "maison", "ciel", "mer", "rivière",
+		"montagne", "forêt", "arbre", "livre", "poésie",
+		"musique", "théâtre", "jardin", "film", "pluie",
+		"hiver", "été", "printemps", "automne", "chanson",
+		"histoire", "cheval", "oiseau", "lac", "neige",
+	}
+}
+
+func WordsReadBothFiles(frLangue, enLangue string, difficulte int) []string {
+	frWords := WordReader(frLangue, difficulte)
+	enWords := WordReader(enLangue, difficulte)
+	combinewords := append(frWords, enWords...)
+	return combinewords
 }
 
 func VictoireReader(victoire bool) []string {
+	var filename string
+	if victoire {
+		filename = "./Data/victoire.txt"
+	} else {
+		filename = "./Data/defaite.txt"
+	}
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Erreur lors de la lecture du fichier :%v\n", err)
+		return nil
+	}
+	scanner := bufio.NewScanner(strings.NewReader(string(content)))
+	var phrases []string
+	for scanner.Scan() {
+		if len(phrases) >= 40 {
+			break
+		}
+		phrases = append(phrases, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		return nil
+	}
 	/*
 		Fonction qui va renvoyer une liste de string qui contiendra
 		toutes les phrases du ficher victoire.txt ou du ficher defaite.txt
