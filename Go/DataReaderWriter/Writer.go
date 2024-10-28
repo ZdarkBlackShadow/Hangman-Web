@@ -2,72 +2,83 @@ package datareaderwriter
 
 import (
 	"fmt"
+	game "game/Game"
 	"io/ioutil"
-	"strings"
+	"os"
+	"strconv"
 )
 
-func Writer(pseudo string, nbParties, score int, difficulte, langue string) {
-
-	file, err := ioutil.ReadFile("./Data/users.txt")
-	if err != nil {
-		fmt.Printf("Erreur lors de l'ouverture du fichier %v\n", err)
-		return
+func Writer(u game.User) {
+	content, error := ioutil.ReadFile("../Data/users.txt")
+	if error != nil {
+		fmt.Println("Error when opening file")
 	}
-	Lignes := []string{} //contient toutes les lignes du ficher users.txt
-	temp := ""
-	for _, element := range string(file) {
-		if element != '\n' && element != '\r' {
-			temp += string(element)
-		} else {
-			if temp != "" {
-				Lignes = append(Lignes, temp)
-				temp = ""
+	res := []game.User{}
+	temp := game.User{}
+	temp1 := ""
+	temp2 := 0
+	for _, element := range string(content) {
+		switch element {
+		case '\n':
+			temp.Langue = temp1
+			temp1 = ""
+			res = append(res, temp)
+			temp = game.User{}
+			temp2 = 0
+		case ' ':
+			temp2++
+			if temp2 != 6 {
+				switch temp2 {
+				case 1:
+					temp.Pseudo = temp1
+				case 2:
+					temp.NbPartieJoué = Atoi(temp1)
+				case 3:
+					temp.Score = Atoi(temp1)
+				case 4:
+					temp.Level = Atoi(temp1)
+				}
+			}
+			temp1 = ""
+		default:
+			if element != '\r' {
+				temp1 += string(element)
 			}
 		}
 	}
-	//retour a la ligne
-	if temp != "" {
-		Lignes = append(Lignes, temp)
-	}
-	//Recherche le pseudo en question
-	userExists := false
-	for _, line := range Lignes {
-		data := strings.Split(line, ",")
-		if len(data) > 0 && data[0] == pseudo {
-			userExists = true
-			fmt.Printf("Utilisateur %s trouvé. Mise à jour des informations.\n", pseudo)
-			data[1] = fmt.Sprintf("%d", nbParties)
-			data[2] = fmt.Sprintf("%d", score)
-			updatedLine := strings.Join(data, ",")
-			for i, l := range Lignes {
-				if l == line {
-					Lignes[i] = updatedLine
-					break
-				}
-			}
+	//fin de lecture users.txt
+	Find := false
+	for _, ele := range res {
+		if ele.Pseudo == u.Pseudo {
+			Find = true
+			ele.NbPartieJoué++
+			ele.Score += u.Score
 			break
 		}
 	}
-
-	if !userExists {
-		fmt.Printf("Erreur : l'utilisateur %s est inconnu.\n", pseudo)
-		//message d'erreur si l'utilisateur n'existe pas
-		return
+	if !Find {
+		res = append(res, game.User{
+			Pseudo:       u.Pseudo,
+			Score:        u.Score,
+			NbPartieJoué: u.NbPartieJoué,
+			Level:        u.Level,
+			Langue:       u.Langue,
+		})
 	}
-	err = ioutil.WriteFile("./Data/users.txt", []byte(strings.Join(Lignes, "\n")), 0644)
+	//preparation du contenu
+	contenu := ""
+	for _, element := range res {
+		contenu += element.Pseudo + " " + strconv.Itoa(element.NbPartieJoué) + " " + strconv.Itoa(element.Score) + " " + strconv.Itoa(element.Level) + " " + element.Langue + "\n\r"
+	}
+	//ecriture dans le ficher
+	file, err := os.OpenFile("../Data/users.txt", os.O_WRONLY|os.O_TRUNC, 0644)
+	defer file.Close()
 	if err != nil {
-		fmt.Printf("Erreur lors de l'écriture du fichier : %v\n", err)
+		panic(err)
+	}
+	_, err = file.WriteString(contenu)
+	if err != nil {
+		fmt.Println("Erreur lors de l'écriture dans le fichier:", err)
 		return
 	}
 }
-
-//analyse ligne pour savoir si l'utlisateur existe déja
-/*
-	// Construire les données à écrire
-	data := fmt.Sprintf("Pseudo: %s, Parties jouées: %d, Score: %d, Difficulté: %s, Langue: %s",
-		pseudo, nbParties, score, difficulte, langue)
-	// Écrire les données dans le fichier
-	if _, err := file.WriteString(data + "\n"); err != nil {
-		fmt.Printf("Erreur lors de l'écriture dans le fichier '%s': %v\n", path, err)
-	}
-*/

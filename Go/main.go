@@ -22,6 +22,7 @@ var Erreur game.Erreur = game.Erreur{
 var Identified bool = false
 var InGame bool = false
 var Replay bool = false
+var UserIn game.User
 
 /*{
 	Start:                 true,
@@ -95,6 +96,13 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 		Erreur.BackTo = "acceuil"
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	}
+	UserIn = game.User{
+		Pseudo:       r.FormValue("pseudo"),
+		Langue:       r.FormValue("langue"),
+		Level:        datareaderwriter.Atoi(r.FormValue("level")),
+		NbPartieJoué: 0,
+		Score:        0,
+	}
 	Identified = true
 	temp1, _ := strconv.Atoi(r.FormValue("level"))
 	game.GameInit(game.RandomString(datareaderwriter.WordReader(r.FormValue("langue"), temp1)), temp1)
@@ -144,6 +152,8 @@ func TraitementGame(w http.ResponseWriter, r *http.Request) {
 	if temp || game.PV <= 0 {
 		GameData.Finie = true
 		GameData.Victoire = game.PV > 0
+
+		datareaderwriter.Writer(UserIn)
 		InGame = false
 		http.Redirect(w, r, "/ending", http.StatusSeeOther)
 	} else {
