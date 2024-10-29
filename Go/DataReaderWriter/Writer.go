@@ -13,7 +13,6 @@ func Writer(u game.User) {
 	if error != nil {
 		fmt.Println("Error when opening file")
 	}
-	fmt.Println(u.Score)
 	res := []game.User{}
 	temp := game.User{}
 	temp1 := ""
@@ -45,12 +44,12 @@ func Writer(u game.User) {
 	}
 	//fin de lecture users.txt
 	Find := false
-	for _, ele := range res {
+	for index, ele := range res {
 		if ele.Pseudo == u.Pseudo {
 			Find = true
-			ele.NbPartieJoué++
-			ele.Score += u.Score
-			fmt.Println(ele.Score)
+			u.Score += ele.Score
+			u.NbPartieJoué += ele.NbPartieJoué + 1
+			res[index] = u
 			break
 		}
 	}
@@ -64,7 +63,6 @@ func Writer(u game.User) {
 			Langue:       u.Langue,
 		})
 	}
-	fmt.Println(res)
 	//preparation du contenu
 	contenu := ""
 	for _, element := range res {

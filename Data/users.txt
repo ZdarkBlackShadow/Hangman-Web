@@ -1,4 +1,2 @@
-ZdarkBlackShadow 1 0
-Adrien 1 500
-tintin 1 500
-jonathan 1 500
+Adrien 3 2500
+ZdarkBlackShadow 1 500
