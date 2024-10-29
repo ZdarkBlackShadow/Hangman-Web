@@ -1,9 +1,12 @@
 package game
 
 import (
+	"fmt"
 	"math/rand"
+	"regexp"
 	"strings"
 	"time"
+	"unicode"
 )
 
 // Variable globale
@@ -99,4 +102,60 @@ func GameLap(submit_answer string) bool {
 func RandomString(liste []string) string {
 	rand.Seed(time.Now().UnixNano())
 	return liste[rand.Intn(len(liste))]
+}
+
+func ChoiceLangue(langueChoisi string, answer string) bool {
+	langueChoisi = strings.ToLower(langueChoisi)
+	if langueChoisi == "français" || langueChoisi == "english" || langueChoisi == "español" {
+		fmt.Printf("Langue choisi : %s\n", langueChoisi)
+		fmt.Println("Réponse", answer)
+		return true
+	}
+	fmt.Println("Langue non supportée. Veuillez choisir parmis les langue proposée.")
+	return false
+}
+
+func removeAccents(input string) string {
+	var result strings.Builder
+	for _, r := range input {
+		if unicode.IsLetter(r) {
+			r = unicode.ToLower(r)
+			switch r {
+			case 'à', 'â', 'ä', 'á', 'ã', 'å':
+				r = 'a'
+			case 'ç':
+				r = 'c'
+			case 'é', 'è', 'ê', 'ë':
+				r = 'e'
+			case 'ì', 'í', 'î', 'ï':
+				r = 'i'
+			case 'ñ':
+				r = 'n'
+			case 'ò', 'ó', 'ô', 'õ', 'ö':
+				r = 'o'
+			case 'ù', 'ú', 'û', 'ü':
+				r = 'u'
+			}
+		}
+		result.WriteRune(r)
+	}
+	return result.String()
+}
+
+func isValidInput(input string) bool {
+	re := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	return re.MatchString(input)
+}
+
+func errValidInput(ValidInput string) {
+	var userInput string
+
+	fmt.Println("Entrez un nom d'utilisateur correcte :")
+	fmt.Scanln(&userInput)
+
+	if isValidInput(userInput) {
+		fmt.Println("Nom d'utilisateur valide :", userInput)
+	} else {
+		fmt.Println()
+	}
 }
