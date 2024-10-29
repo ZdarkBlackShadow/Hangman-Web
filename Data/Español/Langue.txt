@@ -1,0 +1,27 @@
+Juego
+Puntuación
+Registrarse
+Apodo
+Dificultad
+Idioma
+Confirmar
+empezar frase
+mesa de Victoire
+Mensaje de derrota
+Segunda validación
+Lista de letras
+Lista de palabras
+Mesa
+Segundo apodo
+Número de partidas jugadas
+Volver a jugar
+Volver
+Segundo Volver
+Volver al juego
+Marcador
+Url incorrecta entrar
+Imagen del juego 
+imagen de la derrota
+imagen de la victoria
+imagen junto a los botones de puntuación izquierdo y derecho
+imagen del logo

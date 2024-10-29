@@ -1,0 +1,27 @@
+Jeu
+Score
+Inscription
+Pseudo
+Difficulté
+Langue
+Valider
+phrase de commencement
+mesa de Victoire
+Message de Defaite
+Deuxiéme valisation
+Liste de lettre
+Liste de mots
+Tableau
+Deuxiéme Pseudo
+Nombre de partie joué
+Rejouer
+Retour
+Deuxiéme Retour
+Retour au Jeu
+Tableau des score
+Mauvais Url entrez
+Image du jeu 
+image pour la défaite
+image pour la Victoire
+image a coter des bouton a gauche et droite du score
+image du logo
