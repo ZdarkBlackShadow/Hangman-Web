@@ -5,7 +5,9 @@ import (
 	game "game/Game"
 	"io/ioutil"
 	"path/filepath"
+	"reflect"
 	"strconv"
+	"strings"
 )
 
 func ReaderUser() game.Tableau {
@@ -128,6 +130,34 @@ func VictoireReader(victoire bool, langue string) []string {
 
 func PackageLangage(langue string) game.LangueText {
 	L := game.LangueText{}
+	//chemin du fichier txt selon la langue choisi
+	var filepath string
+	switch langue {
+	case "français":
+		filepath = "../Data/Français/Langue.txt"
+	case "anglais":
+		filepath = "../Data/English/Langue.txt"
+	case "espagnol":
+		filepath = "../Data/Español/Langue.txt"
+	default:
+		fmt.Println("Langue non supportée")
+		return L //retourner la structure vide en cas de langue qui serai non supporté
+	}
+	//lire le contenu du fiichier
+	content, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		fmt.Println("Erreur lors de la lecture du fichier :", err)
+		return L
+	}
+	//diviser le contenu des lignes pour extraire les différentes valeursa partir du fichier texte
+	lines := strings.Split(strings.TrimSpace(string(content)), "\n")
+	//assignez les lignes aux champs de la structure LangueText
+	val := reflect.ValueOf(&L).Elem()
+	for i := 0; i < val.NumField(); i++ {
+		if i < len(lines) {
+			val.Field(i).SetString(lines[i])
+		}
+	}
 	//ouverture du ficher
 	return L
 }
