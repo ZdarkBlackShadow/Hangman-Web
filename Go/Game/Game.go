@@ -24,6 +24,7 @@ func GameInit(word string, difficulte int) {
 	/*
 		Initialisation du jeu
 	*/
+	fmt.Println(word)
 	Word = word
 	Difficulte = difficulte
 	switch difficulte {
@@ -149,13 +150,15 @@ func isValidInput(input string) bool {
 
 func errValidInput(ValidInput string) {
 	var userInput string
-
 	fmt.Println("Entrez un nom d'utilisateur correcte :")
-	fmt.Scanln(&userInput)
-
-	if isValidInput(userInput) {
+	if isValidInput(ValidInput) {
 		fmt.Println("Nom d'utilisateur valide :", userInput)
 	} else {
 		fmt.Println()
 	}
+}
+
+func AddScore(U User) User {
+	U.Score += U.Level * 500
+	return U
 }

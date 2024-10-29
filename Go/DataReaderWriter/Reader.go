@@ -25,23 +25,19 @@ func ReaderUser() game.Tableau {
 	for _, element := range string(content) { //on regarde tout les element de content en tant que string, ducoup on va analyser un type rune (un seul caratere à la fois)
 		switch element {
 		case '\n': //cas où l'on saute de ligne : nouvel utilisateur
-			temp.Langue = temp1
+			temp.Score = Atoi(temp1)
 			temp1 = ""
 			users.Pseudos = append(users.Pseudos, temp)
 			temp = game.User{}
 			temp2 = 0
 		case ' ': //cas d'un espace : on change de donnée (pseudo, nbparite joué, score, level, langue)
 			temp2++
-			if temp2 != 6 {
+			if temp2 != 3 {
 				switch temp2 {
 				case 1:
 					temp.Pseudo = temp1
 				case 2:
 					temp.NbPartieJoué = Atoi(temp1)
-				case 3:
-					temp.Score = Atoi(temp1)
-				case 4:
-					temp.Level = Atoi(temp1)
 				}
 			}
 			temp1 = "" //reset de temp quand on change de donnée

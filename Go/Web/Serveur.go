@@ -35,6 +35,7 @@ func InitialisationServeur() {
 	http.HandleFunc("/game/traitement", TraitementGame)
 	http.HandleFunc("/ending", Ending)
 	http.HandleFunc("/temporisation", Temporisation)
+	http.HandleFunc("/score/traitement", ScoreTraitement)
 	http.HandleFunc("/score/traitement/replay", ScoreTraitementGame)
 	http.HandleFunc("/score/traitement/acceil", ScoreTraitementAcceil)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

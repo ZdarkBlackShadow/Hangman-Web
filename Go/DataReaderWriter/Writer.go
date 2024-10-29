@@ -13,6 +13,7 @@ func Writer(u game.User) {
 	if error != nil {
 		fmt.Println("Error when opening file")
 	}
+	fmt.Println(u.Score)
 	res := []game.User{}
 	temp := game.User{}
 	temp1 := ""
@@ -20,23 +21,19 @@ func Writer(u game.User) {
 	for _, element := range string(content) {
 		switch element {
 		case '\n':
-			temp.Langue = temp1
+			temp.Score = Atoi(temp1)
 			temp1 = ""
 			res = append(res, temp)
 			temp = game.User{}
 			temp2 = 0
 		case ' ':
 			temp2++
-			if temp2 != 6 {
+			if temp2 != 3 {
 				switch temp2 {
 				case 1:
 					temp.Pseudo = temp1
 				case 2:
 					temp.NbPartieJoué = Atoi(temp1)
-				case 3:
-					temp.Score = Atoi(temp1)
-				case 4:
-					temp.Level = Atoi(temp1)
 				}
 			}
 			temp1 = ""
@@ -53,6 +50,7 @@ func Writer(u game.User) {
 			Find = true
 			ele.NbPartieJoué++
 			ele.Score += u.Score
+			fmt.Println(ele.Score)
 			break
 		}
 	}
@@ -66,10 +64,11 @@ func Writer(u game.User) {
 			Langue:       u.Langue,
 		})
 	}
+	fmt.Println(res)
 	//preparation du contenu
 	contenu := ""
 	for _, element := range res {
-		contenu += element.Pseudo + " " + strconv.Itoa(element.NbPartieJoué) + " " + strconv.Itoa(element.Score) + " " + strconv.Itoa(element.Level) + " " + element.Langue + "\n"
+		contenu += element.Pseudo + " " + strconv.Itoa(element.NbPartieJoué) + " " + strconv.Itoa(element.Score) + "\n"
 	}
 	//ecriture dans le ficher
 	file, err := os.OpenFile("../Data/users.txt", os.O_WRONLY|os.O_TRUNC, 0644)

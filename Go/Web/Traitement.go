@@ -11,7 +11,6 @@ import (
 	"strings"
 )
 
-// A mettre dans game
 func PseudoVerification(pseudo string) bool {
 	temp, err := regexp.MatchString("^[a-zA-Z]{6,32}$", pseudo)
 	if err != nil {
@@ -101,12 +100,26 @@ func TraitementGame(w http.ResponseWriter, r *http.Request) {
 	if temp || game.PV <= 0 {
 		GameData.Finie = true
 		GameData.Victoire = game.PV > 0
-
-		datareaderwriter.Writer(UserIn)
 		InGame = false
 		http.Redirect(w, r, "/ending", http.StatusSeeOther)
 	} else {
 		http.Redirect(w, r, "/game", http.StatusSeeOther)
+	}
+}
+
+func ScoreTraitement(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		Erreur.Message = "code 403 : Accés refusé"
+		Erreur.BackTo = "acceuil"
+		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
+	} else {
+		fmt.Println(GameData.Victoire)
+		if GameData.Victoire {
+			UserIn.Score += UserIn.Level * 500
+		}
+		fmt.Println(UserIn.Score)
+		datareaderwriter.Writer(UserIn)
+		http.Redirect(w, r, "/score", http.StatusSeeOther)
 	}
 }
 
@@ -117,8 +130,8 @@ func ScoreTraitementGame(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	}
 	Identified = true
-	temp1, _ := strconv.Atoi(r.FormValue("level"))
-	game.GameInit("hello", temp1)
+	game.GameInit(game.RandomString(datareaderwriter.WordReader(UserIn.Langue, UserIn.Level)), UserIn.Level)
+	UserIn.Score = 0
 	GameData = game.GameAffichage{
 		Start:                 true,
 		DerniereEssaieReussie: false,
@@ -139,5 +152,6 @@ func ScoreTraitementAcceil(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	}
 	Identified = false
+	UserIn = game.User{}
 	http.Redirect(w, r, "/acceil", http.StatusSeeOther)
 }

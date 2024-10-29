@@ -1,0 +1,28 @@
+Game
+Score
+Registration
+Username
+Difficulty
+Language
+Validate
+Enter a letter or a word
+Well played
+Nice try
+Validate
+List of letters already used
+List of words already used
+Scoreboard
+Username
+Score
+Number of game played
+Replay
+Back to home page
+Back to home page
+Back to game page
+Scoreboard
+Wrong URL
+Image to represent the remaining healths points
+Image to represent the defeat
+Image to represent the victory
+Image to decorate
+Logo of the website

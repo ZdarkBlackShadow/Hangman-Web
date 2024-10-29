@@ -12,7 +12,7 @@
 <body>
     {{template "header"}}
     <div class="form-container">
-        <form action="/score" method="post">
+        <form action="/score/traitement" method="post">
             <h3>{{.Phrasefinal}}</h3>
             {{if eq .Victoire true}}
             <img src="/static/image/victoire.png" alt="image de victoire">

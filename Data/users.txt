@@ -1,3 +1,4 @@
-tintin 0 0 1 english
-Adrien 0 0 1 English
-jonathan 1 0 1 English
+ZdarkBlackShadow 1 0
+Adrien 1 500
+tintin 1 500
+jonathan 1 500
