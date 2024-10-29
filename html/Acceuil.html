@@ -13,7 +13,7 @@
     {{template "header"}}
     <div class="form-container">
         <form action="/traitement" method="post">
-            <h2>Inscription</h2>
+            <h2>{{.Pack.Inscription}}</h2>
             <label for="pseudo">Pseudo</label>
             <input type="text" name="pseudo" id="pseudo" required>
             
@@ -27,8 +27,9 @@
             </select>
             <label for="langue">Langue</label>
             <select name="langue" id="langue">
-                <option value="english">english</option>
-                <option value="français">français</option>
+                <option value="English">english</option>
+                <option value="Français">français</option>
+                <option value="Español">english</option>
             </select>
             
             <button type="submit">Valider</button>

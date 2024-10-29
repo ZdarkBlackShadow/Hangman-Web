@@ -24,7 +24,33 @@
         <label for="answer"></label>
         <input type="text" name="answer" id="answer" required>
         <button type="submit">Valider</button>
-        <img src="/static/image/game/game12.webp" alt="img">
+        {{if eq .PvRestant 12}}
+        <img src="/static/image/game/game12.webp" alt="{{.Pack.ImageGame}}">
+        {{else if eq .PvRestant 11}}
+        <img src="/static/image/game/game11.webp" alt="img">
+        {{else if eq .PvRestant 10}}
+        <img src="/static/image/game/game10.webp" alt="img">
+        {{else if eq .PvRestant 9}}
+        <img src="/static/image/game/game9.webp" alt="img">
+        {{else if eq .PvRestant 8}}
+        <img src="/static/image/game/game8.webp" alt="img">
+        {{else if eq .PvRestant 7}}
+        <img src="/static/image/game/game7.webp" alt="img">
+        {{else if eq .PvRestant 6}}
+        <img src="/static/image/game/game6.webp" alt="img">
+        {{else if eq .PvRestant 5}}
+        <img src="/static/image/game/game5.webp" alt="img">
+        {{else if eq .PvRestant 4}}
+        <img src="/static/image/game/game4.webp" alt="img">
+        {{else if eq .PvRestant 3}}
+        <img src="/static/image/game/game3.webp" alt="img">
+        {{else if eq .PvRestant 2}}
+        <img src="/static/image/game/game2.webp" alt="img">
+        {{else if eq .PvRestant 1}}
+        <img src="/static/image/game/game2.webp" alt="img">
+        {{else if eq .PvRestant 0}}
+        <img src="/static/image/game/game2.webp" alt="img">
+        {{end}}
         <br>
         <h3>Liste des lettres déja utilisé</h3>
         <h4>{{range .ListeLettre}}{{.}} {{end}}</h4>

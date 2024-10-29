@@ -57,6 +57,7 @@ func Writer(u game.User) {
 		}
 	}
 	if !Find {
+		u.NbPartieJoué++
 		res = append(res, game.User{
 			Pseudo:       u.Pseudo,
 			Score:        u.Score,
@@ -68,7 +69,7 @@ func Writer(u game.User) {
 	//preparation du contenu
 	contenu := ""
 	for _, element := range res {
-		contenu += element.Pseudo + " " + strconv.Itoa(element.NbPartieJoué) + " " + strconv.Itoa(element.Score) + " " + strconv.Itoa(element.Level) + " " + element.Langue + "\n\r"
+		contenu += element.Pseudo + " " + strconv.Itoa(element.NbPartieJoué) + " " + strconv.Itoa(element.Score) + " " + strconv.Itoa(element.Level) + " " + element.Langue + "\n"
 	}
 	//ecriture dans le ficher
 	file, err := os.OpenFile("../Data/users.txt", os.O_WRONLY|os.O_TRUNC, 0644)

@@ -1,94 +1,12 @@
 package datareaderwriter
 
 import (
-	"bufio"
 	"fmt"
 	game "game/Game"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 )
-
-func Reader(filename string) {
-	// Créer le chemin complet vers le fichier
-	path := filepath.Join("data", "français", filename)
-	file, err := os.Open(path)
-	if err != nil {
-		fmt.Printf("Erreur lors de l'ouverture du fichier '%s': %v\n", path, err)
-		return
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Printf("Erreur lors de la lecture du fichier '%s': %v\n", path, err)
-	}
-}
-
-// Reader lit le contenu d'un fichier dans la langue spécifiée (français ou anglais) et l'affiche dans la console.
-func DifferentLanguages(filename, langue string) {
-	var path string
-	// Différenciation entre les chemins pour le français et l'anglais
-	if strings.ToLower(langue) == "français" {
-		path = filepath.Join("data", "français", filename)
-	} else if strings.ToLower(langue) == "anglais" || strings.ToLower(langue) == "english" {
-		path = filepath.Join("data", "english", filename)
-	} else {
-		fmt.Printf("Erreur : Langue inconnue '%s'. Choisissez entre 'français' et 'anglais'.\n", langue)
-		return
-	}
-	file, err := os.Open(path)
-	if err != nil {
-		fmt.Printf("Erreur lors de l'ouverture du fichier '%s': %v\n", path, err)
-		return
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Printf("Erreur lors de la lecture du fichier '%s': %v\n", path, err)
-	}
-}
-
-func AnalyseLangue(motCache, langue string) {
-	var path string
-	if strings.ToLower(langue) == "français" {
-		path = filepath.Join("data", "français", "Files.txt")
-	} else if strings.ToLower(langue) == "anglais" || strings.ToLower(langue) == "english" {
-		path = filepath.Join("data", "english", "File1")
-	} else {
-		fmt.Printf("Erreur : Langue inconnue '%s. Choisissez entre 'français' et 'anglais'.\n", langue)
-		return
-	}
-	file, err := os.Open(path)
-	if err != nil {
-		fmt.Printf("Erreur lors de l'ouverture du fichier '%v': %v\n", path, err)
-		return
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	found := false
-	for scanner.Scan() {
-		if strings.ToLower(scanner.Text()) == strings.ToLower(motCache) {
-			found = true
-			break
-		}
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Printf("Erreurr llrs de la lecture du fichier '%s' : %v\n", path, err)
-	}
-	if found {
-		fmt.Printf("Le mot caché '%s' est reconnu comme étant en %s.\n", motCache, langue)
-	} else {
-		fmt.Printf("Le mt caché '%s' n'est pas trouvé dans la liste des mots en %s.\n", motCache, langue)
-	}
-}
 
 func ReaderUser() game.Tableau {
 	/*
@@ -150,16 +68,7 @@ func Atoi(s string) int {
 
 func WordReader(langue string, difficulte int) []string {
 	var filename string
-	if langue == "français" {
-		filename = filepath.Join("../Data/Français", fmt.Sprintf("File%d.txt", difficulte))
-	} else if langue == "english" {
-		filename = filepath.Join("../Data/English", fmt.Sprintf("File%d.txt", difficulte))
-	} else {
-		filename = filepath.Join("../Data/Espagnol", fmt.Sprintf("File%d.txt", difficulte))
-
-		fmt.Println("Langue non supportée")
-		return nil
-	}
+	filename = filepath.Join("../Data/", langue, fmt.Sprintf("File%d.txt", difficulte))
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("Erreur lors de la lecture du fichier : %v\n", err)
@@ -187,19 +96,12 @@ func WordReader(langue string, difficulte int) []string {
 	return words
 }
 
-func WordsReadBothFiles(frLangue, enLangue string, difficulte int) []string {
-	frWords := WordReader(frLangue, difficulte)
-	enWords := WordReader(enLangue, difficulte)
-	combinewords := append(frWords, enWords...)
-	return combinewords
-}
-
-func VictoireReader(victoire bool) []string {
+func VictoireReader(victoire bool, langue string) []string {
 	var filename string
 	if victoire {
-		filename = "../Data/victoire.txt"
+		filename = "../Data/" + langue + "/victoire.txt"
 	} else {
-		filename = "../Data/defaite.txt"
+		filename = "../Data/" + langue + "/defaite.txt"
 	}
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -226,4 +128,10 @@ func VictoireReader(victoire bool) []string {
 		Nombre de ligne maximum  : 40
 	*/
 	return phrases
+}
+
+func PackageLangage(langue string) game.LangueText {
+	L := game.LangueText{}
+	//ouverture du ficher
+	return L
 }
