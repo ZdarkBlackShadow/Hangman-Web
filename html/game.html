@@ -10,51 +10,57 @@
     <title>Hangman</title>
 </head>
 <body>
-    {{template "header"}}
+    <header class="header">
+        <a href="/acceil"><img src="/static/image/logo.webp" alt="{{.Pack.Logo}}"></a>
+        <nav class="navbar">
+            <a href="/game">{{.Pack.Jeu}}</a>
+            <a href="/score">{{.Pack.Score}}</a>
+        </nav>
+    </header>
     <div class="form-container">
         <form action="/game/traitement" method="post">
         <h2>[{{range .Mot}} {{.}} {{end}}]</h2>
         {{if eq .Start true}}
-            <h2>Entrez une lettre ou un mot</h2>
+            <h2>{{.Pack.PhraseStart}}</h2>
         {{else if eq .DerniereEssaieReussie true}}
-            <h2>Bien joué</h2>
+            <h2>{{.Pack.BienJoue}}</h2>
         {{else}}
-            <h2>Dommage</h2>
+            <h2>{{.Pack.Dommage}}</h2>
         {{end}}
         <label for="answer"></label>
         <input type="text" name="answer" id="answer" required>
-        <button type="submit">Valider</button>
+        <button type="submit">{{.Pack.Valider2}}</button>
         {{if eq .PvRestant 12}}
         <img src="/static/image/game/game12.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 11}}
-        <img src="/static/image/game/game11.webp" alt="img">
+        <img src="/static/image/game/game11.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 10}}
-        <img src="/static/image/game/game10.webp" alt="img">
+        <img src="/static/image/game/game10.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 9}}
-        <img src="/static/image/game/game9.webp" alt="img">
+        <img src="/static/image/game/game9.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 8}}
-        <img src="/static/image/game/game8.webp" alt="img">
+        <img src="/static/image/game/game8.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 7}}
-        <img src="/static/image/game/game7.webp" alt="img">
+        <img src="/static/image/game/game7.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 6}}
-        <img src="/static/image/game/game6.webp" alt="img">
+        <img src="/static/image/game/game6.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 5}}
-        <img src="/static/image/game/game5.webp" alt="img">
+        <img src="/static/image/game/game5.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 4}}
-        <img src="/static/image/game/game4.webp" alt="img">
+        <img src="/static/image/game/game4.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 3}}
-        <img src="/static/image/game/game3.webp" alt="img">
+        <img src="/static/image/game/game3.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 2}}
-        <img src="/static/image/game/game2.webp" alt="img">
+        <img src="/static/image/game/game2.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 1}}
-        <img src="/static/image/game/game2.webp" alt="img">
+        <img src="/static/image/game/game1.webp" alt="{{.Pack.ImageGame}}">
         {{else if eq .PvRestant 0}}
-        <img src="/static/image/game/game2.webp" alt="img">
+        <img src="/static/image/game/game0.webp" alt="{{.Pack.ImageGame}}">
         {{end}}
         <br>
-        <h3>Liste des lettres déja utilisé</h3>
+        <h3>{{.Pack.ListeLettre}}</h3>
         <h4>{{range .ListeLettre}}{{.}} {{end}}</h4>
-        <h3>Liste des mots déja utilisé</h3>
+        <h3>{{.Pack.ListeMots}}</h3>
         <h4>{{range .ListeMots}}{{.}} {{end}}</h4>
     </form>
     {{template "footer"}}

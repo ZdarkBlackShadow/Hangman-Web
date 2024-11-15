@@ -5,23 +5,25 @@ Apodo
 Dificultad
 Idioma
 Confirmar
-empezar frase
-mesa de Victoire
-Mensaje de derrota
-Segunda validación
-Lista de letras
-Lista de palabras
-Mesa
-Segundo apodo
+Introduce una letra o una palabra
+Bien hecho
+Buen intento
+Validar
+Lista de letras ya utilizadas
+Lista de palabras ya utilizadas
+Tabla de puntuaciones
+Apodo
 Número de partidas jugadas
+puntuaciones
 Volver a jugar
-Volver
-Segundo Volver
+Volver a casa
+Volver a casa
 Volver al juego
 Marcador
-Url incorrecta entrar
+Url errónea
 Imagen del juego 
-imagen de la derrota
-imagen de la victoria
-imagen junto a los botones de puntuación izquierdo y derecho
-imagen del logo
+Imagen de la derrota
+Imagen de la victoria
+Imagen junto a los botones de puntuación izquierdo y derecho
+Imagen del logotipo
+Jugar

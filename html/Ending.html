@@ -10,16 +10,22 @@
     <title>Document</title>
 </head>
 <body>
-    {{template "header"}}
+    <header class="header">
+        <a href="/acceil"><img src="/static/image/logo.webp" alt="{{.Pack.Logo}}"></a>
+        <nav class="navbar">
+            <a href="/game">{{.Pack.Jeu}}</a>
+            <a href="/score">{{.Pack.Score}}</a>
+        </nav>
+    </header>
     <div class="form-container">
         <form action="/score/traitement" method="post">
             <h3>{{.Phrasefinal}}</h3>
             {{if eq .Victoire true}}
-            <img src="/static/image/victoire.png" alt="image de victoire">
+            <img src="/static/image/victoire.png" alt="{{.Pack.Imagedefaite}}">
             {{else}}
-            <img src="/static/image/defaite.png" alt="image de defaite">
+            <img src="/static/image/defaite.png" alt="{{.Pack.Imagevictoire}}">
             {{end}}
-            <button type="submit">Tableau des score</button>
+            <button type="submit">{{.Pack.TabelauScore}}</button>
         </form>
     </div>
     {{template "footer"}}

@@ -10,16 +10,22 @@
     <title>Hangman</title>
 </head>
 <body>
-    {{template "header"}}
-    <h1>Tableau des score</h1>
+    <header class="header">
+        <a href="/acceil"><img src="/static/image/logo.webp" alt="{{.Pack.Logo}}"></a>
+        <nav class="navbar">
+            <a href="/game">{{.Pack.Jeu}}</a>
+            <a href="/score">{{.Pack.Score}}</a>
+        </nav>
+    </header>
+    <h1>{{.Pack.Tableau}}</h1>
     <div class="score">
         <br><br>
         <table border="2">
             <thead>
                 <tr>
-                    <th>Pseudo</th>
-                    <th>Score</th>
-                    <th>Nombre de partie joué</th>
+                    <th>{{.Pack.Pseudo2}}</th>
+                    <th>{{.Pack.Score2}}</th>
+                    <th>{{.Pack.NbPartie}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,16 +39,33 @@
             </tbody>
         </table>
     </div>
+    {{if eq .GameEnd true}}
     <div class="form-container">
         <form action="/score/traitement/replay" method="post">
-            <button type="submit">Rejouer</button>
+            <img src="/static/image/game.webp" alt="{{.Pack.ImageTemp}}">
+            <button type="submit">{{.Pack.Rejouer}}</button>
         </form>
     </div>
-        <div class="form-container2">
+    <div class="form-container2">
         <form action="/score/traitement/acceil" method="post">
-            <button type="submit">retour à l'acceil</button>
+            <img src="/static/image/game.webp" alt="{{.Pack.ImageTemp}}">
+            <button type="submit">{{.Pack.Retour}}</button>
         </form>
     </div>
+    {{else}}
+    <div class="form-container">
+        <form action="/acceil" method="post">
+            <img src="/static/image/game.webp" alt="{{.Pack.ImageTemp}}">
+            <button type="submit">{{.Pack.Play}}</button>
+        </form>
+    </div>
+    <div class="form-container2">
+        <form action="/acceil" method="post">
+            <img src="/static/image/game.webp" alt="{{.Pack.ImageTemp}}">
+            <button type="submit">{{.Pack.Play}}</button>
+        </form>
+    </div>
+    {{end}}
     {{template "footer"}}
 </body>
 </html>

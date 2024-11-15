@@ -4,25 +4,26 @@ Registration
 Username
 Difficulty
 Language
-Validate
+Confirm
 Enter a letter or a word
-Well played
+Well done
 Nice try
 Validate
 List of letters already used
 List of words already used
-Scoreboard
-Username
+Scores table
+Nickname
+Number of games played
 Score
-Number of game played
 Replay
-Back to home page
-Back to home page
-Back to game page
+Back to home
+Back to home
+Back to game
 Scoreboard
-Wrong URL
-Image to represent the remaining healths points
-Image to represent the defeat
-Image to represent the victory
-Image to decorate
-Logo of the website
+Wrong Url
+Game image 
+Image for Defeat
+Victory image
+Image next to the left and right score buttons
+Logo image
+Play

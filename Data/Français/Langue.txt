@@ -5,23 +5,25 @@ Pseudo
 Difficulté
 Langue
 Valider
-phrase de commencement
-mesa de Victoire
-Message de Defaite
-Deuxiéme valisation
-Liste de lettre
-Liste de mots
-Tableau
-Deuxiéme Pseudo
+Entrez une lettre ou un mot
+Bien joué
+Bien essayé
+Valider
+Liste des lettres déja utilisé
+Liste des mots déja utilisé
+Tableau des scores
+Pseudo
 Nombre de partie joué
+Score
 Rejouer
-Retour
-Deuxiéme Retour
+Retour à l'acceuil
+Retour à l'acceuil
 Retour au Jeu
 Tableau des score
-Mauvais Url entrez
+Mauvais Url
 Image du jeu 
-image pour la défaite
-image pour la Victoire
-image a coter des bouton a gauche et droite du score
-image du logo
+Image pour la défaite
+Image pour la Victoire
+Image a coter des bouton a gauche et droite du score
+Image du logo
+Jouer

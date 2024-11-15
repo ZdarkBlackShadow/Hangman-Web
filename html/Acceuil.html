@@ -10,14 +10,20 @@
     <title>Hangman</title>
 </head>
 <body>
-    {{template "header"}}
+    <header class="header">
+        <a href="/acceil"><img src="/static/image/logo.webp" alt="{{.Pack.Logo}}"></a>
+        <nav class="navbar">
+            <a href="/game">{{.Pack.Jeu}}</a>
+            <a href="/score">{{.Pack.Score}}</a>
+        </nav>
+    </header>
     <div class="form-container">
         <form action="/traitement" method="post">
             <h2>{{.Pack.Inscription}}</h2>
-            <label for="pseudo">Pseudo</label>
+            <label for="pseudo">{{.Pack.Pseudo}}</label>
             <input type="text" name="pseudo" id="pseudo" required>
             
-            <label for="level">Niveau de difficulté</label>
+            <label for="level">{{.Pack.Level}}</label>
             <select name="level" id="level">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -25,14 +31,14 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            <label for="langue">Langue</label>
+            <label for="langue">{{.Pack.Langue}}</label>
             <select name="langue" id="langue">
                 <option value="English">english</option>
                 <option value="Français">français</option>
-                <option value="Español">english</option>
+                <option value="Español">español</option>
             </select>
             
-            <button type="submit">Valider</button>
+            <button type="submit">{{.Pack.Valider}}</button>
         </form>
     </div>
     {{template "footer"}}

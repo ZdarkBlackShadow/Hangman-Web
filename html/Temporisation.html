@@ -10,19 +10,25 @@
     <title>Hangman</title>
 </head>
 <body>
-    {{template "header"}}
+    <header class="header">
+        <a href="/acceil"><img src="/static/image/logo.webp" alt="{{.Pack.Logo}}"></a>
+        <nav class="navbar">
+            <a href="/game">{{.Pack.Jeu}}</a>
+            <a href="/score">{{.Pack.Score}}</a>
+        </nav>
+    </header>
     {{if eq .BackTo "game"}}
     <div class="form-container">
         <form action="/game" method="post">
             <h3>{{.Message}}</h3>
-            <button type="submit">retour au jeu</button>
+            <button type="submit">{{.Pack.RetourGame}}</button>
         </form>
     </div>
     {{else}}
     <div class="form-container">
         <form action="/acceil" method="post">
             <h3>{{.Message}}</h3>
-            <button type="submit">retour à l'acceuil</button>
+            <button type="submit">{{.Pack.Retour2}}</button>
         </form>
     </div>
     {{end}}
