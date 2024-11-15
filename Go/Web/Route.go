@@ -50,6 +50,7 @@ func ScoreRoute(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/temporisation", http.StatusSeeOther)
 	} else {
 		data := datareaderwriter.ReaderUser()
+		data.GameEnd = GameData.Finie
 		err1 := temp.ExecuteTemplate(w, "score", data)
 		if err1 != nil {
 			log.Fatal(err1)

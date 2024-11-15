@@ -28,6 +28,7 @@ type GameAffichage struct {
 type Tableau struct {
 	Pseudos []User
 	Pack    LangueText
+	GameEnd bool
 }
 
 type Erreur struct {
