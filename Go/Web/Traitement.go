@@ -54,6 +54,7 @@ func TraitementUser(w http.ResponseWriter, r *http.Request) {
 	Identified = true
 	temp1, _ := strconv.Atoi(r.FormValue("level"))
 	game.GameInit(game.RandomString(datareaderwriter.WordReader(r.FormValue("langue"), temp1)), temp1)
+	GameData.Pack = datareaderwriter.PackageLangage(UserIn.Langue)
 	GameData = game.GameAffichage{
 		Start:                 true,
 		DerniereEssaieReussie: false,
@@ -97,7 +98,8 @@ func TraitementGame(w http.ResponseWriter, r *http.Request) {
 		Victoire:              false,
 	}
 
-	if temp || game.PV <= 0 {
+	if temp[0] || game.PV <= 0 {
+		GameData.Double = temp[1]
 		GameData.Finie = true
 		GameData.Victoire = game.PV > 0
 		InGame = false
@@ -115,9 +117,12 @@ func ScoreTraitement(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println(GameData.Victoire)
 		if GameData.Victoire {
-			UserIn.Score += UserIn.Level * 500
+			if GameData.Double {
+				UserIn.Score += (UserIn.Level * 500) * 2
+			} else {
+				UserIn.Score += UserIn.Level * 500
+			}
 		}
-		fmt.Println(UserIn.Score)
 		datareaderwriter.Writer(UserIn)
 		http.Redirect(w, r, "/score", http.StatusSeeOther)
 	}

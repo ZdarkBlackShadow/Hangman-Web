@@ -2,6 +2,7 @@ package web
 
 import (
 	"fmt"
+	datareaderwriter "game/DataReaderWriter"
 	game "game/Game"
 	"html/template"
 	"net/http"
@@ -62,12 +63,9 @@ func InitialisationServeur() {
 			http.Redirect(w, r, "/temporisation", http.StatusTemporaryRedirect)
 		}
 	})
-	Langue = DefaultLangage()
+	Langue = "Français"
 	//LanguePackage = datareaderwriter.PackageLangage(Langue)
-	LanguePackage = game.LangueText{
-		Inscription: Langue,
-		Logo:        "test logo",
-	}
+	LanguePackage = datareaderwriter.PackageLangage(Langue)
 	//Initialisation des assets
 	fileserver := http.FileServer(http.Dir("../assets"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))

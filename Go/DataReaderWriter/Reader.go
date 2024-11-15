@@ -84,13 +84,6 @@ func WordReader(langue string, difficulte int) []string {
 			}
 		}
 	}
-	/*
-		Fonction qui va renvoyer une liste de string qui contiendra
-		tout les mots d'un ficher.txt exemple : WordReader("Français", 3)
-		devra lire le ficher file3.txt dans le dossier français.
-		Une ligne = un mot
-		Nombre de ligne maximum  : 30
-	*/
 	return words
 }
 
@@ -130,26 +123,23 @@ func VictoireReader(victoire bool, langue string) []string {
 
 func PackageLangage(langue string) game.LangueText {
 	L := game.LangueText{}
-	//chemin du fichier txt selon la langue choisi
 	var filepath string
 	switch langue {
-	case "français":
+	case "Français":
 		filepath = "../Data/Français/Langue.txt"
-	case "anglais":
+	case "English":
 		filepath = "../Data/English/Langue.txt"
-	case "espagnol":
+	case "Español":
 		filepath = "../Data/Español/Langue.txt"
 	default:
 		fmt.Println("Langue non supportée")
-		return L //retourner la structure vide en cas de langue qui serai non supporté
+		return L
 	}
-	//lire le contenu du fiichier
 	content, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		fmt.Println("Erreur lors de la lecture du fichier :", err)
 		return L
 	}
-	//diviser le contenu des lignes pour extraire les différentes valeursa partir du fichier texte
 	lines := strings.Split(strings.TrimSpace(string(content)), "\n")
 	//assignez les lignes aux champs de la structure LangueText
 	val := reflect.ValueOf(&L).Elem()
@@ -158,6 +148,6 @@ func PackageLangage(langue string) game.LangueText {
 			val.Field(i).SetString(lines[i])
 		}
 	}
-	//ouverture du ficher
+	fmt.Println(L.Logo)
 	return L
 }

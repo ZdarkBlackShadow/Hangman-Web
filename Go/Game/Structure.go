@@ -23,6 +23,7 @@ type GameAffichage struct {
 	MotActuel             string // Ajout pour stocker le mot à deviner dans la partie
 	Phrasefinal           string
 	Pack                  LangueText
+	Double                bool
 }
 
 type Tableau struct {
@@ -79,4 +80,5 @@ type LangueText struct {
 	Imagevictoire string
 	ImageTemp     string
 	Logo          string
+	Play          string
 }

@@ -51,6 +51,7 @@ func ScoreRoute(w http.ResponseWriter, r *http.Request) {
 	} else {
 		data := datareaderwriter.ReaderUser()
 		data.GameEnd = GameData.Finie
+		data.Pack = LanguePackage
 		err1 := temp.ExecuteTemplate(w, "score", data)
 		if err1 != nil {
 			log.Fatal(err1)
@@ -71,6 +72,7 @@ func Ending(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	GameData.Phrasefinal = game.RandomString(datareaderwriter.VictoireReader(GameData.Victoire, UserIn.Langue))
+	GameData.Pack = LanguePackage
 	err1 := temp.ExecuteTemplate(w, "ending", GameData)
 	if err1 != nil {
 		log.Fatal(err1)
@@ -96,6 +98,7 @@ func Temporisation(w http.ResponseWriter, r *http.Request) {
 		}
 		Erreur.BackTo = "acceuil"
 	}
+	Erreur.Pack = LanguePackage
 	err1 := temp.ExecuteTemplate(w, "temporisation", Erreur)
 	if err1 != nil {
 		log.Fatal(err1)

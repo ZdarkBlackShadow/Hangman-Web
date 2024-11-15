@@ -55,14 +55,14 @@ func GameInit(word string, difficulte int) {
 	}
 }
 
-func GameLap(submit_answer string) bool {
+func GameLap(submit_answer string) []bool {
 	if submit_answer == Word {
-		return true
+		return []bool{true, len(LettreAlreadyFind) <= len(Word)/2}
 	}
 	if len(submit_answer) > 1 {
 		PV -= 2
 		ListeMot = append(ListeMot, submit_answer)
-		return false
+		return []bool{false, false}
 	}
 	letter := rune(submit_answer[0])
 	if strings.ContainsRune(Word, letter) {
@@ -81,13 +81,13 @@ func GameLap(submit_answer string) bool {
 			}
 		}
 		if temp {
-			return true
+			return []bool{true}
 		}
 	} else {
 		PV -= 1
 		ListeLettre = append(ListeLettre, submit_answer)
 	}
-	return PV <= 0
+	return []bool{false, false}
 	/*
 		Verifie si submit_answer est un mot ou une lettre
 		et le comparer avec le mot :
@@ -146,19 +146,4 @@ func removeAccents(input string) string {
 func isValidInput(input string) bool {
 	re := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 	return re.MatchString(input)
-}
-
-func errValidInput(ValidInput string) {
-	var userInput string
-	fmt.Println("Entrez un nom d'utilisateur correcte :")
-	if isValidInput(ValidInput) {
-		fmt.Println("Nom d'utilisateur valide :", userInput)
-	} else {
-		fmt.Println()
-	}
-}
-
-func AddScore(U User) User {
-	U.Score += U.Level * 500
-	return U
 }
