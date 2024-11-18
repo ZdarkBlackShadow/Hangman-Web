@@ -97,6 +97,8 @@ func GameLap(submit_answer string) []bool {
 		Si la lettre est fausse, rajouter à ListeLettre
 		Si le mot est juste ou que toutes les lettres on été trouvé renvoyer true
 		Sinon renvoyer False
+		Renvoie true ou false si le joueurs à trouvé le mot alors qu'il n'a pas la moitiè des
+		lettres de dévoilé.(Fonctionalité bonus)
 	*/
 }
 

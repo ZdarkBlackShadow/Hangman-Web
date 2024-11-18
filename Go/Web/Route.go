@@ -43,7 +43,6 @@ func GameRoute(w http.ResponseWriter, r *http.Request) {
 }
 
 func ScoreRoute(w http.ResponseWriter, r *http.Request) {
-	//A remplacer par une fonction dans Reader.go (fonction qui lit le fucher users.txt et qui renvoie sous forme de structure game.User)
 	if InGame {
 		Erreur.Message = "code 403 : accés refusé, you are in game"
 		Erreur.BackTo = "game"

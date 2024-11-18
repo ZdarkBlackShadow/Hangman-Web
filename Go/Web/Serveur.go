@@ -63,8 +63,7 @@ func InitialisationServeur() {
 			http.Redirect(w, r, "/temporisation", http.StatusTemporaryRedirect)
 		}
 	})
-	Langue = "Français"
-	//LanguePackage = datareaderwriter.PackageLangage(Langue)
+	Langue = DefaultLangage()
 	LanguePackage = datareaderwriter.PackageLangage(Langue)
 	//Initialisation des assets
 	fileserver := http.FileServer(http.Dir("../assets"))
